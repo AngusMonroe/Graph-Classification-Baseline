@@ -34,12 +34,14 @@ A framework of graph classification baselines which including TUDataset Loader, 
 
 ## Setup
 
-All test on server 201 with python3.9. An environment is available at `/home/jiaxing/anaconda3/envs/xjx`.
+All test on server 201 with python3.9 and CUDA 11.1. An environment is available at `/home/jiaxing/anaconda3/envs/xjx`.
 
 ```
-pip install dgl
+pip install dgl-cu111 -f https://data.dgl.ai/wheels/repo.html
 pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 pip install torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.9.0+cu111.html
+pip install matplotlib
+pip install tenserboardX
 ```
 
 ## Usage
@@ -156,3 +158,4 @@ For example, `GCNNet()` in [nets/gcn_net.py](./nets/gcn_net.py) is given the GNN
 ## Reference
 
 Benchmarking Graph Neural Networks [[paper](https://arxiv.org/pdf/2003.00982.pdf%3C/p%3E)] [[Github](https://github.com/graphdeeplearning/benchmarking-gnns)]
+https://codechina.csdn.net/mirrors/dmlc/dgl/-/tree/master/examples/pytorch
