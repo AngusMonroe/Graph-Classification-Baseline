@@ -62,8 +62,6 @@ def self_loop(g):
     return new_g
 
 
-
-    
 class TUsDataset(torch.utils.data.Dataset):
     def __init__(self, name):
         t0 = time.time()
@@ -71,9 +69,10 @@ class TUsDataset(torch.utils.data.Dataset):
         
         #dataset = TUDataset(self.name, hidden_size=1)
         dataset = LegacyTUDataset(self.name, hidden_size=1) # dgl 4.0
+        self.input_dim, self.label_dim, self.max_num_node = dataset.statistics()
 
         # frankenstein has labels 0 and 2; so correcting them as 0 and 1
-        if self.name == "FRANKENSTEIN":
+        if self.name in ["FRANKENSTEIN", "MUTAG"]:
             dataset.graph_labels = np.array([1 if x==2 else x for x in dataset.graph_labels])
 
         print("[!] Dataset: ", self.name)
@@ -176,12 +175,12 @@ class TUsDataset(torch.utils.data.Dataset):
         # The input samples is a list of pairs (graph, label).
         graphs, labels = map(list, zip(*samples))
         labels = torch.tensor(np.array(labels))
-        #tab_sizes_n = [ graphs[i].number_of_nodes() for i in range(len(graphs))]
-        #tab_snorm_n = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_n ]
-        #snorm_n = torch.cat(tab_snorm_n).sqrt()  
-        #tab_sizes_e = [ graphs[i].number_of_edges() for i in range(len(graphs))]
-        #tab_snorm_e = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_e ]
-        #snorm_e = torch.cat(tab_snorm_e).sqrt()
+        # tab_sizes_n = [ graphs[i].number_of_nodes() for i in range(len(graphs))]
+        # tab_snorm_n = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_n ]
+        # snorm_n = torch.cat(tab_snorm_n).sqrt()
+        # tab_sizes_e = [ graphs[i].number_of_edges() for i in range(len(graphs))]
+        # tab_snorm_e = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_e ]
+        # snorm_e = torch.cat(tab_snorm_e).sqrt()
         batched_graph = dgl.batch(graphs)
         
         return batched_graph, labels
