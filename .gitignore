@@ -121,6 +121,11 @@ log.txt
 outputs
 out
 tmp
+tmp1.sh
+tmp2.sh
+tmp3.sh
+tmp4.sh
+result/
 
 # Pyre type checker
 .pyre/
